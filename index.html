@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS3 Comunicaciones | Cable UTP AMP Cat 6</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+        integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+        integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary-color: #1e2527;
+            /* Color principal, fondo oscuro */
+            --secondary-color: #2c3539;
+            /* Color secundario, fondo de secciones */
+            --accent-color: #0052cc;
+            /* Color de acento, azul para botones y detalles */
+            --text-color-dark: #e0e6ed;
+            /* Color de texto principal, claro */
+            --text-color-light: #a0a9b2;
+            /* Color de texto secundario, gris claro */
+            --font-montserrat: 'Montserrat', sans-serif;
+            /* Fuente principal */
+            --gradient-bg: linear-gradient(135deg, #1a2a44 0%, #2c3539 100%);
+            /* Fondo con degradado */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilos generales del body */
+        body {
+            font-family: var(--font-montserrat);
+            background: var(--gradient-bg);
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="50" cy="50" r="2"/%3E%3Ccircle cx="20" cy="20" r="1"/%3E%3Ccircle cx="80" cy="80" r="1.5"/%3E%3Ccircle cx="30" cy="70" r="1"/%3E%3Ccircle cx="70" cy="30" r="1.2"/%3E%3C/g%3E%3C/svg%3E');
+            background-size: 100px 100px;
+            color: var(--text-color-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        .header {
+            background: rgba(30, 37, 39, 0.9);
+            /* Fondo semitransparente */
+            backdrop-filter: blur(10px);
+            /* Efecto de desenfoque */
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            /* Sombra al hacer scroll */
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 45px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.08);
+            /* Efecto zoom al pasar el mouse */
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--text-color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1em;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+            /* Color azul al pasar el mouse */
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            /* Subrayado animado al pasar el mouse */
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8em;
+            color: var(--text-color-dark);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.1);
+            /* Efecto zoom al pasar el mouse */
+        }
+
+        /* principal) */
+        .hero-section {
+            background: var(--gradient-bg);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 280px;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--text-color-dark);
+        }
+
+        .hero-description {
+            font-size: 1.2em;
+            color: var(--text-color-light);
+            margin-bottom: 25px;
+            max-width: 450px;
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 280px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: zoomIn 0.8s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        .hero-image img {
+            max-width: 450px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.03);
+            /* Efecto zoom al pasar el mouse */
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .price {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: var(--accent-color);
+            background: rgba(0, 82, 204, 0.2);
+            padding: 8px 20px;
+            border-radius: 30px;
+            box-shadow: 0 3px 10px rgba(0, 82, 204, 0.3);
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1em;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #fff;
+            text-align: center;
+            min-width: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-primary:hover,
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 82, 204, 0.4);
+        }
+
+        /* bloques generales */
+        .section {
+            padding: 80px 0;
+            background-color: var(--secondary-color);
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text-color-dark);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0;
+            transform: scaleX(0);
+            transition: transform 0.5s ease-out;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title.visible::after {
+            transform: scaleX(1);
+            /* Animación de subrayado */
+        }
+
+        /* características */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .feature-item {
+            background: var(--primary-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .feature-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 82, 204, 0.3);
+        }
+
+        .feature-item .material-icons {
+            font-size: 3.5em;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover .material-icons {
+            transform: scale(1.1);
+        }
+
+        .feature-item h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: var(--text-color-dark);
+        }
+
+        .feature-item p {
+            color: var(--text-color-light);
+            font-size: 1em;
+        }
+
+        /* galería de imágenes*/
+        .gallery-section {
+            background-color: var(--primary-color);
+            padding: 80px 0;
+        }
+
+        .image-gallery {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .image-item img {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .image-item img:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        /* flechas y puntos*/
+        .slick-prev,
+        .slick-next {
+            font-size: 0;
+            /* Oculta texto por defecto */
+            line-height: 0;
+            width: 40px;
+            height: 40px;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .slick-prev::before,
+        .slick-next::before {
+            font-family: 'Material Icons';
+            font-size: 2em;
+            color: var(--accent-color);
+            display: inline-block;
+        }
+
+        .slick-prev::before {
+            content: 'chevron_left';
+        }
+
+        .slick-next::before {
+            content: 'chevron_right';
+        }
+
+        .slick-prev:hover,
+        .slick-next:hover {
+            transform: scale(1.2);
+        }
+
+        .slick-prev {
+            left: -50px;
+        }
+
+        .slick-next {
+            right: -50px;
+        }
+
+        .slick-dots li button:before {
+            color: var(--accent-color);
+            font-size: 10px;
+        }
+
+        /* especificaciones técnicas*/
+        .specs-table {
+            max-width: 700px;
+            margin: auto;
+            display: grid;
+            gap: 15px;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .spec-row.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .spec-value {
+            color: var(--text-color-dark);
+            font-size: 1.1em;
+        }
+
+        /* descripción general */
+        .description-content {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .description-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .description-content p {
+            margin-bottom: 25px;
+            color: var(--text-color-light);
+            font-size: 1.1em;
+        }
+
+        .downloads {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 8px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            background: rgba(0, 82, 204, 0.2);
+        }
+
+        .download-link:hover {
+            color: #fff;
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* formulario de contacto */
+        .contact-section {
+            background: var(--gradient-bg);
+            padding: 80px 0;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 30px auto 0;
+            background: var(--primary-color);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .contact-form.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-form h3 {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            color: var(--text-color-dark);
+            text-align: center;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--text-color-light);
+            border-radius: 6px;
+            background: #2a3236;
+            color: var(--text-color-dark);
+            font-size: 1em;
+            font-family: var(--font-montserrat);
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        .contact-form button {
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 82, 204, 0.4);
+        }
+
+        .form-success {
+            display: none;
+            color: var(--accent-color);
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* FOOTER */
+        .footer {
+            background-color: var(--secondary-color);
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .footer p {
+            margin: 10px 0;
+            color: var(--text-color-light);
+            font-size: 1em;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            font-size: 1.8em;
+            color: var(--text-color-light);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        /* ANIMACIONES */
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ajustes para móviles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: var(--primary-color);
+                position: absolute;
+                top: 70px;
+                left: 0;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+
+            .nav-links.active {
+                display: flex;
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5em;
+            }
+
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                text-align: center;
+            }
+
+            .hero-image img {
+                max-width: 90%;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .slick-prev,
+            .slick-next {
+                display: none !important;
+            }
+
+            .contact-form {
+                padding: 25px;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            #pdfModal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 9999;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #pdfModal .modal-content {
+                background: #222;
+                border-radius: 10px;
+                width: 90vw;
+                max-width: 600px;
+                max-height: 90vh;
+                padding: 20px;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+
+            #pdfFrame {
+                width: 100%;
+                height: 70vh;
+                border: none;
+                border-radius: 8px;
+            }
+
+            #pdfModal button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: #0052cc;
+                color: #fff;
+                border: none;
+                border-radius: 50%;
+                width: 35px;
+                height: 35px;
+                font-size: 1.2em;
+                cursor: pointer;
+            }
+
+            @media (max-width: 600px) {
+                #pdfModal .modal-content {
+                    width: 98vw;
+                    max-width: 98vw;
+                    padding: 8px;
+                }
+
+                #pdfFrame {
+                    height: 55vh;
+                }
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="https://i.ibb.co/fzWWFW7Q/Logo1-Photoroom.png" alt="DS3 Comunicaciones" class="logo-img">
+            </a>
+            <span class="material-icons menu-toggle" onclick="toggleMenu()">menu</span>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="#features">Características</a></li>
+                    <li><a href="#specs">Especificaciones</a></li>
+                    <li><a href="#description">Descargas</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sección principal -->
+        <section class="hero-section">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h1>Cable UTP AMP <br>Categoría 6 CMR 23AWG</h1>
+                    <p class="hero-description">Conexión confiable y de alto rendimiento para redes modernas, superando
+                        los estándares TIA/EIA e ISO/IEC.</p>
+                    <div class="cta-group">
+                        <span class="price">US$ 187.00 por rollo</span>
+                        <a href="pago.html" class="btn-primary">Comprar ahora</a>
+                        <a href="#contact" class="btn-secondary">Cotizar</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://i.ibb.co/Y75cvbVL/caja1.png" alt="Cable UTP AMP Cat 6">
+                </div>
+            </div>
+        </section>
+
+        <!-- Descripcion del producto -->
+        <section class="section description-section" id="description">
+            <div class="container">
+                <div class="description-content">
+                    <h2 class="section-title">Descripción General</h2>
+                    <p>Los cables AMP NetConnect Categoría 6 están diseñados para ofrecer un rendimiento excepcional en
+                        aplicaciones como Gigabit Ethernet, VoIP, y video digital. Su construcción robusta asegura una
+                        conectividad estable y de alta velocidad.</p>
+                    <p>Se presenta en un carrete-in-box para facilitar su instalación, cumpliendo con los estándares de
+                        inflamabilidad NEC Artículo 800 y NFPA 70, CMR (ANSI/UL 1666, IEC 332-1).</p>
+                    <div class="downloads">
+                        <a href="6-1427200-4-DS.pdf" download class="download-link">
+                            <span class="material-icons">description</span>
+                            Ficha técnica
+                        </a>
+                        <a href="#" class="download-link">
+                            <span class="material-icons">menu_book</span>
+                            Manual
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal para PDF -->
+        <div id="pdfModal"
+            style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;">
+            <div
+                style="background:#222; border-radius:10px; max-width:90vw; max-height:90vh; padding:20px; position:relative;">
+                <button onclick="closePdfModal()"
+                    style="position:absolute; top:10px; right:10px; background:#0052cc; color:#fff; border:none; border-radius:50%; width:35px; height:35px; font-size:1.2em; cursor:pointer;">×</button>
+                <iframe id="pdfFrame" src="" style="width:80vw; height:80vh; border:none; border-radius:8px;"></iframe>
+            </div>
+        </div>
+
+        <!-- Caracteristicas del producto -->
+        <section class="section features-section" id="features">
+            <div class="container">
+                <h2 class="section-title">Características Clave</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <span class="material-icons">flash_on</span>
+                        <h3>Rendimiento Superior</h3>
+                        <p>Supera los estándares TIA/EIA e ISO/IEC para conexiones de alta velocidad.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="material-icons">local_fire_department</span>
+                        <h3>Seguridad Ignífuga</h3>
+                        <p>Cumple con estándares NEC y NFPA 70 para mayor seguridad.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="material-icons">thermostat</span>
+                        <h3>Rango de Temperatura</h3>
+                        <p>Opera eficientemente entre -20°C y 60°C.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="material-icons">settings_ethernet</span>
+                        <h3>Compatibilidad</h3>
+                        <p>Soporta Gigabit Ethernet, VoIP, y aplicaciones de video digital.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Imagenes de Referencias -->
+        <section class="section gallery-section">
+            <div class="container">
+                <h2 class="section-title">Imagenes de Referencias</h2>
+                <div class="image-gallery">
+                    <div class="image-item">
+                        <img src="https://i.ibb.co/wNR2FfRG/image-1024-Photoroom.png" alt="Cable UTP enrollado en caja">
+                    </div>
+                    <div class="image-item">
+                        <img src="https://i.ibb.co/Y4DRLHHG/rollo-cable-utp-amp-commscope-futp-cat-6a-lszh-3-iec-60332-3-305m-blanco-Photoroom.png"
+                            alt="Conexiones de cableado de red">
+                    </div>
+                    <div class="image-item">
+                        <img src="https://i.ibb.co/3YC9hpvH/AMP-cat6-A-884024508-10-Photoroom.png"
+                            alt="Detalle del conector RJ45">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Especificaciones Técnicas -->
+        <section class="section specs-section" id="specs">
+            <div class="container">
+                <h2 class="section-title">Especificaciones Técnicas</h2>
+                <div class="specs-table">
+                    <div class="spec-row">
+                        <span class="spec-label">Voltaje</span>
+                        <span class="spec-value">300VAC or VDC</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Velocidad de propagación</span>
+                        <span class="spec-value">70%</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Temperatura de operación</span>
+                        <span class="spec-value">-20°C a 60°C</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Temperatura de almacenamiento</span>
+                        <span class="spec-value">-20°C a 80°C</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de contacto -->
+        <section class="section contact-section" id="contact">
+            <div class="container">
+                <h2 class="section-title">Contáctanos</h2>
+                <form class="contact-form" id="contactForm">
+                    <h3>Envíanos un mensaje</h3>
+                    <input type="text" id="name" placeholder="Nombre" required>
+                    <input type="email" id="email" placeholder="Correo electrónico" required>
+                    <textarea id="message" placeholder="Mensaje" rows="6" required></textarea>
+                    <button type="submit">Enviar</button>
+                    <div class="form-success">¡Mensaje enviado con éxito!</div>
+
+                </form>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 DS3 Comunicaciones - Todos los derechos reservados</p>
+            <!--
+            <div class="social-icons">
+                <a href="#"><span class="material-icons">facebook</span></a>
+                <a href="#"><span class="material-icons">instagram</span></a>
+                <a href="#"><span class="material-icons">email</span></a>
+            </div>
+            <p><a href="#contact">Contáctanos</a> | <a href="#">Política de Privacidad</a></p>
+            --->
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+        integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // Alterna el menú en dispositivos móviles
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Inicializa el carrusel Slick para la galería de imágenes
+        $(document).ready(function () {
+            $('.image-gallery').slick({
+                dots: true, // Muestra los puntos de navegación
+                infinite: true, // Ciclo infinito de imágenes
+                speed: 500, // Velocidad de transición
+                slidesToShow: 1, // Muestra una imagen a la vez
+                slidesToScroll: 1, // Desplaza una imagen por vez
+                autoplay: true, // Reproduce automáticamente
+                autoplaySpeed: 3500, // Tiempo entre imágenes (ms)
+                arrows: true, // Muestra flechas de navegación
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            arrows: false // Oculta flechas en móviles
+                        }
+                    }
+                ]
+            });
+        });
+
+        // Efecto de sombra en el header al hacer scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Observador para animar elementos al entrar en pantalla
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Aplica el observador a títulos, características, especificaciones, descripción y formulario de contacto
+        document.querySelectorAll('.section-title, .feature-item, .spec-row, .description-content, .contact-form').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Muestra mensaje de éxito al enviar el formulario de contacto
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const successMessage = document.querySelector('.form-success');
+
+            // Si todos los campos están llenos, muestra el mensaje y limpia el formulario
+            if (name && email && message) {
+                successMessage.style.display = 'block';
+                this.reset();
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            }
+        });
+        // Funciones para abrir y cerrar el modal del PDF
+        function openPdfModal(pdfUrl) {
+            document.getElementById('pdfFrame').src = pdfUrl;
+            document.getElementById('pdfModal').style.display = 'flex';
+        }
+        function closePdfModal() {
+            document.getElementById('pdfModal').style.display = 'none';
+            document.getElementById('pdfFrame').src = '';
+        }
+
+        // Cambia el comportamiento del enlace de ficha técnica
+        document.addEventListener('DOMContentLoaded', function () {
+            var fichaLink = document.querySelector('.download-link[download]');
+            if (fichaLink) {
+                fichaLink.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    openPdfModal(this.getAttribute('href'));
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
